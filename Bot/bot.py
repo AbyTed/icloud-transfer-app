@@ -122,7 +122,6 @@ class Bot:
             print("user does not have photo icloud page")
             return False
 
-
     def select_amount_of_photos_to_transfer(
         self, count: int, file_path: str, delete: bool, progress_bar: bool
     ):
@@ -142,7 +141,7 @@ class Bot:
         scroll_until_all_loaded(
             self, self.driver, container_css=grid_css, item_css=photo_css, delete=delete
         )
-         
+
         try:
             download_button = self.wait.until(
                 EC.element_to_be_clickable(
@@ -153,9 +152,37 @@ class Bot:
                 )
             )
             download_button.click()
+
         except Exception as e:
             print(f"Error clicking download button: {e}")
+        if delete:
+            try:
+                self.wait.until(
+                    EC.invisibility_of_element_located(
+                        (By.CSS_SELECTOR, ".FullPageSpinnerContainer")
+                    )
+                )
+                self.driver.execute_script("document.body.click();")
+                # Wait for the delete button to be clickable (adds a bit of reliability)
+                delete_button = self.wait.until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, ".DeleteButton"))
+                )
 
+                # Move to the element and perform the click
+                delete_button.click()
+                # Wait for the delete button to be clickable
+                delete_button = self.wait.until(
+                    EC.element_to_be_clickable(
+                        (By.CSS_SELECTOR, "ui-button.block.large.secondary.destructive")
+                    )
+                )
+
+                # Perform the click action
+                self.action.move_to_element(delete_button).click(
+                    delete_button
+                ).perform()
+            except Exception as e:
+                print(f"Error clicking delete button: {e}")
         move_folder(file_path)
 
     def close_driver(self):

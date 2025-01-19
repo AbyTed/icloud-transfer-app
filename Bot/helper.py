@@ -60,7 +60,7 @@ def scroll_until_all_loaded(
     retries = 0
     items = list()
     
-    while retries < 1000:  # Allow up to 3 retries for edge cases
+    while retries < 1500:  # Allow up to 3 retries for edge cases
         try:
 
             # Get the current number of items
@@ -76,8 +76,8 @@ def scroll_until_all_loaded(
                 for item in cur_items:
 
                     try:
-                        self.action.move_to_element(item).key_down(Keys.SHIFT).click(
-                            item
+                        self.action.move_to_element(item[0]).key_down(Keys.SHIFT).click(
+                            item[0]
                         ).perform()
                         time.sleep(1)
                     except Exception as e:
@@ -89,18 +89,7 @@ def scroll_until_all_loaded(
         except Exception as e:
             print(f"Error during clicking: {e}")
             break
-        
-    if delete:
-        try:
-            delete_button = self.wait.until(
-                EC.element_to_be_clickable(
-                    (
-                        By.CSS_SELECTOR,
-                        ".DeleteButton",
-                    )
-                )
-            )
-            delete_button.click()
-        except Exception as e:
-            print(f"Error clicking delete button: {e}")
+    
+    
+            
     self.action.click(items[0]).perform()
