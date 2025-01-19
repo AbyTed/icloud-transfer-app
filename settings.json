@@ -1,0 +1,20 @@
+{
+    "colors": {
+        "COLOR_TEXT": "Red"
+    },
+    "fonts": {
+        "FONT_PRIMARY": [
+            "Helvetica",
+            14
+        ],
+        "FONT_SECONDARY": [
+            "Helvetica",
+            12
+        ],
+        "FONT_TITLE": [
+            "Helvetica",
+            18,
+            "bold"
+        ]
+    }
+}

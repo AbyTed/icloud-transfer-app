@@ -1,11 +1,17 @@
 from .app import App
 from .login import Login
 from .home import Home
+from .setting import Settings
+from .history import History
+
+
 
 # Pages for the application for ease of use
 pages = {
     "Login": Login,
-    "Home": Home
+    "Home": Home,
+    "Setting": Settings,
+    "History": History,
 }
 
 def start_app():

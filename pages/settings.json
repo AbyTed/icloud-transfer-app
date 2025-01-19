@@ -1,0 +1,40 @@
+{
+    "fonts": {
+        "LARGE_FONT": [
+            "Helvetica",
+            35
+        ],
+        "FONT_PRIMARY": [
+            "Courier",
+            16
+        ],
+        "FONT_SECONDARY": [
+            "Courier",
+            16
+        ],
+        "FONT_TITLE": [
+            "Courier",
+            16,
+            "bold"
+        ]
+    },
+    "colors": {
+        "COLOR_PRIMARY": "#2E3B55",
+        "COLOR_SECONDARY": "#1C253B",
+        "COLOR_ACCENT": "#4CAF50",
+        "COLOR_TEXT": "Green",
+        "COLOR_TEXT_SECONDARY": "#B0BEC5",
+        "COLOR_BACKGROUND": "#0F172A",
+        "COLOR_HIGHLIGHT": "#F9A825",
+        "COLOR_ERROR": "#E53935"
+    },
+    "widget_styles": {
+        "BUTTON_COLOR": "#4CAF50",
+        "BUTTON_HOVER": "#66BB6A",
+        "ENTRY_COLOR": "#1E293B",
+        "ENTRY_TEXT_COLOR": "#FFFFFF",
+        "SCROLLBAR_COLOR": "#37474F",
+        "SCROLLBAR_HOVER": "#546E7A"
+    },
+    "threading": 0
+}
