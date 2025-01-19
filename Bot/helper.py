@@ -9,7 +9,12 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-def move_folder(file_path: str):
+import os
+import zipfile
+import time
+
+
+def move_folder(file_path: str, name_transfer: str, val=1):
     """
     Moves the most recent zip file from the Downloads folder to the specified file path and extracts its contents.
 
@@ -30,37 +35,37 @@ def move_folder(file_path: str):
     if most_recent_file.endswith(".zip"):
         print(f"Most recent zip file: {most_recent_file}")
 
+        # Extract contents of the zip file
         with zipfile.ZipFile(most_recent_file, "r") as zip_ref:
             zip_ref.extractall(file_path)
 
         print(f"Contents of the zip file extracted to: {file_path}")
 
+        # Assuming the extracted folder is the only folder in the destination path
+        extracted_folder = os.path.join(file_path, os.listdir(file_path)[0])
+
+        # Rename the extracted folder (you can modify the new name logic as needed)
+        new_folder_name = name_transfer
+        new_folder_path = os.path.join(file_path, new_folder_name)
+
+        if os.path.exists(extracted_folder):
+            os.rename(extracted_folder, new_folder_path)
+            print(f"Renamed folder from {extracted_folder} to {new_folder_path}")
+
+        # Remove the zip file after extraction and renaming
         os.remove(most_recent_file)
     else:
-        time.sleep(3)
+        time.sleep(3 * val)
+        val += 2
+        move_folder(file_path, val=val, name_transfer=name_transfer)
 
-        move_folder(file_path)
 
+def scroll_until_all_loaded(self, driver: WebDriver, item_css: str) -> list[WebElement]:
 
-def scroll_until_all_loaded(
-    self, driver: WebDriver, container_css: str, item_css: str, delete: bool
-) -> list[WebElement]:
-    """
-    Scrolls a container dynamically until all items are loaded.
-
-    Args:
-        driver: The Selenium WebDriver instance.
-        container_css: XPath of the scrollable container.
-        item_css: css of the items within the container.
-
-    Returns:
-        List of WebElements (all loaded items).
-    """
-    
     retries = 0
     items = list()
-    
-    while retries < 1500:  # Allow up to 3 retries for edge cases
+
+    while retries < 1500:
         try:
 
             # Get the current number of items
@@ -76,8 +81,8 @@ def scroll_until_all_loaded(
                 for item in cur_items:
 
                     try:
-                        self.action.move_to_element(item[0]).key_down(Keys.SHIFT).click(
-                            item[0]
+                        self.action.move_to_element(item).key_down(Keys.SHIFT).click(
+                            item
                         ).perform()
                         time.sleep(1)
                     except Exception as e:
@@ -89,7 +94,3 @@ def scroll_until_all_loaded(
         except Exception as e:
             print(f"Error during clicking: {e}")
             break
-    
-    
-            
-    self.action.click(items[0]).perform()

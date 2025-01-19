@@ -25,6 +25,7 @@ class Bot:
         self.password = str(password)
         self.wait = WebDriverWait(self.driver, 10)
         self.action = ActionChains(self.driver)
+        self.transfer_name = "None"
 
     def login_into_icloud(self):
         self.driver.get(ICLOUDWEBSITE)
@@ -137,10 +138,7 @@ class Bot:
             print(f"Error when switching icloud iframe {e}")
 
         photo_css = ".PhotoItemView"
-        grid_css = ".grid-items"
-        scroll_until_all_loaded(
-            self, self.driver, container_css=grid_css, item_css=photo_css, delete=delete
-        )
+        scroll_until_all_loaded(self, driver=self.driver, item_css=photo_css)
 
         try:
             download_button = self.wait.until(
@@ -155,6 +153,7 @@ class Bot:
 
         except Exception as e:
             print(f"Error clicking download button: {e}")
+
         if delete:
             try:
                 self.wait.until(
@@ -183,7 +182,7 @@ class Bot:
                 ).perform()
             except Exception as e:
                 print(f"Error clicking delete button: {e}")
-        move_folder(file_path)
+        move_folder(file_path, self.transfer_name)
 
     def close_driver(self):
         self.driver.quit()

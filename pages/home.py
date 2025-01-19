@@ -49,7 +49,7 @@ class Home(ctk.CTkFrame, FrameHelper):
     def icloud_photo_transfer(self):
 
         bot: Bot = self.controller.bot
-
+        bot.transfer_name = self.transfer_name_entry.get()
         bot.select_amount_of_photos_to_transfer(
             1000,
             self.folder_name,
