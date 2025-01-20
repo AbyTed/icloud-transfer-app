@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from customtkinter import filedialog
+import time
 
 from .constants import AppConfig
 
@@ -37,6 +38,8 @@ def select_file():
     return None
 
 
+
+    
 def form_transfer_photo(self):
     appconfig = AppConfig()
 

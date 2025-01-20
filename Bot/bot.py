@@ -124,7 +124,7 @@ class Bot:
             return False
 
     def select_amount_of_photos_to_transfer(
-        self, count: int, file_path: str, delete: bool, progress_bar: bool
+        self, file_path: str, delete: bool, progress_bar: bool
     ):
         self.driver.get(PHOTO_ICLOUD_PAGE)
         try:
