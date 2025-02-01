@@ -78,7 +78,7 @@ class Login(ctk.CTkFrame, FrameHelper):
             text="Sign Up",
             command=self.sign_up,
         )
-        sign_up_button.grid(row=3, column=4, columnspan=2, pady=10)
+        sign_up_button.grid(row=3, column=2, columnspan=2, pady=10)
         # error label
         self.error_label = ctk.CTkLabel(
             self,
@@ -162,7 +162,7 @@ class Login(ctk.CTkFrame, FrameHelper):
                 # Create the WebDriver with the options
                 driver = webdriver.Chrome(options=chrome_options)
 
-                self.controller.bot = Bot(webdriver.Chrome(), username, password)
+                self.controller.bot = Bot(driver, username, password)
 
                 if not self.controller.bot.login_into_icloud():
                     self.controller.bot.close_driver()
@@ -170,15 +170,20 @@ class Login(ctk.CTkFrame, FrameHelper):
                     self.logging_in_screen(onOff=False)
                 else:
                     # Create the popup entry for the two-step verification code
-                    code = "placeholder"
+                    code = create_popup_entry()
                     while not code.isdigit() or len(code) != 6:
+                        print("Invalid code. Please enter a 6-digit numeric code.")
                         code = create_popup_entry()
 
                     # Pass the code to the bot for two-step verification
                     self.controller.bot.two_step_verification(code)
 
-                    self.go_to_home()
+            except webdriver.WebDriverException as e:
+                print(f"WebDriver error: {e}")
+            except ValueError as e:
+                print(f"Value error: {e}")
             except Exception as e:
+                print(f"Unexpected error: {e}")
                 print(f"login process error: {e}")
 
         bot_thread = threading.Thread(target=bot_login_process, daemon=True)

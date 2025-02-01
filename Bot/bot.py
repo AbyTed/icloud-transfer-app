@@ -1,4 +1,3 @@
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,7 +8,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from dotenv import load_dotenv
 
 import time
-import os
 
 from .constants import ICLOUDWEBSITE, PHOTO_ICLOUD_PAGE
 from .helper import move_folder, scroll_until_all_loaded
@@ -28,6 +26,7 @@ class Bot:
         self.transfer_name = "None"
 
     def login_into_icloud(self):
+        """Logs into iCloud using the provided username and password."""
         self.driver.get(ICLOUDWEBSITE)
 
         try:
@@ -77,8 +76,8 @@ class Bot:
         except Exception as e:
             print(f"Error entering password: {e}")
             return False
-        try:
 
+        try:
             self.wait.until(
                 EC.presence_of_all_elements_located(
                     (By.CLASS_NAME, "form-security-code-input")
@@ -90,6 +89,7 @@ class Bot:
             return False
 
     def two_step_verification(self, code: str):
+        """Handles the two-step verification process by entering the provided code."""
         code_list = list(code)
 
         inputs = self.wait.until(
@@ -115,6 +115,7 @@ class Bot:
             print(f"Error clicking 'Not Now' button: {e}")
 
     def go_to_icloud(self) -> bool:
+        """Navigates to the iCloud Photos page."""
         try:
             self.driver.get(PHOTO_ICLOUD_PAGE)
             return True
@@ -123,16 +124,13 @@ class Bot:
             print("user does not have photo icloud page")
             return False
 
-    def select_amount_of_photos_to_transfer(
-        self, file_path: str, delete: bool, progress_bar: bool
-    ):
+    def select_amount_of_photos_to_transfer(self, file_path: str, delete: bool):
+        """Selects and transfers photos from iCloud, optionally deleting them after transfer."""
         self.driver.get(PHOTO_ICLOUD_PAGE)
         try:
-
             iframe = self.wait.until(
                 EC.presence_of_element_located((By.ID, "early-child"))
             )
-
             self.driver.switch_to.frame(iframe)
         except Exception as e:
             print(f"Error when switching icloud iframe {e}")
@@ -150,7 +148,6 @@ class Bot:
                 )
             )
             download_button.click()
-
         except Exception as e:
             print(f"Error clicking download button: {e}")
 
@@ -162,21 +159,15 @@ class Bot:
                     )
                 )
                 self.driver.execute_script("document.body.click();")
-                # Wait for the delete button to be clickable (adds a bit of reliability)
                 delete_button = self.wait.until(
                     EC.element_to_be_clickable((By.CSS_SELECTOR, ".DeleteButton"))
                 )
-
-                # Move to the element and perform the click
                 delete_button.click()
-                # Wait for the delete button to be clickable
                 delete_button = self.wait.until(
                     EC.element_to_be_clickable(
                         (By.CSS_SELECTOR, "ui-button.block.large.secondary.destructive")
                     )
                 )
-
-                # Perform the click action
                 self.action.move_to_element(delete_button).click(
                     delete_button
                 ).perform()
@@ -185,4 +176,5 @@ class Bot:
         move_folder(file_path, self.transfer_name)
 
     def close_driver(self):
+        """Closes the WebDriver instance."""
         self.driver.quit()

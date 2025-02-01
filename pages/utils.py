@@ -1,11 +1,15 @@
 import customtkinter as ctk
 from customtkinter import filedialog
-import time
 
 from .constants import AppConfig
 
-
 def create_popup_entry() -> str:
+    """
+    Creates a popup window to prompt the user to enter a verification code.
+    
+    Returns:
+        str: The verification code entered by the user.
+    """
     popup = ctk.CTkToplevel()
     popup.title("Enter your code")
     popup.geometry("300x200")
@@ -30,17 +34,22 @@ def create_popup_entry() -> str:
 
     return user_input_val.get()
 
-
 def select_file():
+    """
+    Opens a file dialog for the user to select a folder.
+    
+    Returns:
+        str: The path of the selected folder, or None if no folder was selected.
+    """
     folder_path = filedialog.askdirectory(title="Select Folder")
     if folder_path:
         return folder_path
     return None
 
-
-
-    
 def form_transfer_photo(self):
+    """
+    Creates the form for transferring photos, including input fields and options.
+    """
     appconfig = AppConfig()
 
     # Transfer name input

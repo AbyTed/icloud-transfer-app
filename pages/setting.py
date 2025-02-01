@@ -8,13 +8,13 @@ from .frame_helper import FrameHelper
 class Settings(ctk.CTkFrame, FrameHelper):
     def __init__(self, parent, controller):
         ctk.CTkFrame.__init__(self, parent)
-
         self.controller = controller
         self.initialize_ui()
 
     def initialize_ui(self):
         appconfig = AppConfig()
         self.appconfig = AppConfig()
+
         # Label for "Settings"
         label = ctk.CTkLabel(
             self,
@@ -70,7 +70,6 @@ class Settings(ctk.CTkFrame, FrameHelper):
             self,
             values=["Default", "Arial", "Courier", "Helvetica"],
             variable=self.font_var,
-            
         )
         font_option_menu.grid(row=4, column=1, padx=10, pady=10, sticky="w")
 
@@ -88,7 +87,6 @@ class Settings(ctk.CTkFrame, FrameHelper):
             self,
             values=["Black", "White", "Red", "Blue", "Green"],
             variable=self.font_color_var,
-            
         )
         font_color_option_menu.grid(row=5, column=1, padx=10, pady=10, sticky="w")
 
@@ -100,35 +98,33 @@ class Settings(ctk.CTkFrame, FrameHelper):
         )
         save_button.grid(row=6, column=0, columnspan=2, pady=10)
 
-        #exit to home
+        # Back to home button
         home_button = ctk.CTkButton(
             self,
             text="Back",
             command=self.go_to_home,
         )
-        home_button.grid(row=6, column = 2, columnspan=2, pady=10)
-    
+        home_button.grid(row=6, column=2, columnspan=2, pady=10)
+
     def toggle_threading(self):
+        # Save threading setting
         self.appconfig.save_threading(self.threading_var.get())
 
-    def toggle_scrollbar(self):
-        if self.scrollbar_var.get():
-            print("Scrollbar enabled.")
-        else:
-            print("Scrollbar disabled.")
     def go_to_home(self):
+        # Navigate back to the home frame
         self.controller.show_frame("Home")
-        
+
     def change_theme(self, theme):
+        # Change the theme of the application
         if theme == "Dark":
             ctk.set_appearance_mode("dark")
             self.appconfig.update_color("white")
         else:
             ctk.set_appearance_mode("light")
             self.appconfig.update_color("black")
-            
-        
+
     def save_settings(self):
+        # Save all settings and refresh the application
         self.change_theme(self.theme_var.get())
         self.appconfig.update_font(self.font_var.get())
         self.appconfig.update_color(self.font_color_var.get())

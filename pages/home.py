@@ -5,7 +5,7 @@ import time
 from .constants import AppConfig
 from .utils import select_file, form_transfer_photo
 from .frame_helper import FrameHelper
-
+from Bot import Bot
 
 class Home(ctk.CTkFrame, FrameHelper):
     def __init__(self, parent, controller):
@@ -60,11 +60,12 @@ class Home(ctk.CTkFrame, FrameHelper):
 
         bot: Bot = self.controller.bot
         bot.transfer_name = self.transfer_name_entry.get()
+        
+        self.add_item_to_db(str(bot.transfer_name))
+        
         if self.progress_var.get():
             self.start_progress()
-        for i in range(1):
-            print(self.progress_var_num.get())
-            time.sleep(1)
+        
            
         bot.select_amount_of_photos_to_transfer(
             self.folder_name,
