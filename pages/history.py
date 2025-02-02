@@ -2,8 +2,8 @@ import customtkinter as ctk
 import sqlite3  # For SQLite database
 from datetime import datetime
 
-from .constants import AppConfig  # Importing AppConfig, though it's not used in this snippet
-from .frame_helper import FrameHelper  # Importing FrameHelper for additional functionalities
+from .constants import AppConfig  
+from .frame_helper import FrameHelper  
 
 
 class History(ctk.CTkFrame, FrameHelper):
