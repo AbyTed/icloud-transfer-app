@@ -42,7 +42,7 @@ def move_folder(file_path: str, name_transfer: str, val=1):
         # Assuming the extracted folder is the only folder in the destination path
         extracted_folder = os.path.join(file_path, os.listdir(file_path)[0])
 
-        # Rename the extracted folder (you can modify the new name logic as needed)
+        # Rename the extracted folder 
         new_folder_name = name_transfer
         new_folder_path = os.path.join(file_path, new_folder_name)
 
