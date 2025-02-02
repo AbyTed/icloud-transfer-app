@@ -139,7 +139,7 @@ class Login(ctk.CTkFrame, FrameHelper):
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        # Ensure the username and password are valid strings (you can add extra validation here if necessary)
+        # Ensure the username and password are valid strings
         if not username or not password:
             print("Username and password cannot be empty.")
             return
