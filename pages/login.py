@@ -43,7 +43,7 @@ class Login(ctk.CTkFrame, FrameHelper):
         username_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
 
         self.username_entry = ctk.CTkEntry(
-            self, fg_color=appconfig.ENTRY_COLOR, text_color=appconfig.ENTRY_TEXT_COLOR
+            self, fg_color=appconfig.ENTRY_COLOR, text_color=appconfig.ENTRY_TEXT_COLOR, show="*"
         )
         self.username_entry.grid(row=1, column=1, padx=10, pady=10)
 
@@ -177,7 +177,7 @@ class Login(ctk.CTkFrame, FrameHelper):
 
                     # Pass the code to the bot for two-step verification
                     self.controller.bot.two_step_verification(code)
-
+                    self.go_to_home()
             except webdriver.WebDriverException as e:
                 print(f"WebDriver error: {e}")
             except ValueError as e:
@@ -188,6 +188,7 @@ class Login(ctk.CTkFrame, FrameHelper):
 
         bot_thread = threading.Thread(target=bot_login_process, daemon=True)
         bot_thread.start()
-
+        
+        
     def go_to_home(self):
         self.controller.show_frame("Home")

@@ -40,6 +40,9 @@ class FrameHelper:
     def add_item_to_db(self, item_name):
         """Add a new item to the history_items table in the database."""
         try:
+            self.database_path = os.path.join(
+                os.path.dirname(__file__), "../data/history.db"
+            )
             # Connect to the database
             conn = sqlite3.connect(self.database_path)
             cursor = conn.cursor()

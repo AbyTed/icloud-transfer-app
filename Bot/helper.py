@@ -63,7 +63,7 @@ def scroll_until_all_loaded(self, driver: WebDriver, item_css: str) -> list[WebE
     retries = 0
     items = list()
 
-    while retries < 1500:
+    while retries < 100:
         try:
 
             # Get the current number of items

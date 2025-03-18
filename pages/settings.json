@@ -5,15 +5,15 @@
             35
         ],
         "FONT_PRIMARY": [
-            "Courier",
+            "Helvetica",
             16
         ],
         "FONT_SECONDARY": [
-            "Courier",
+            "Helvetica",
             16
         ],
         "FONT_TITLE": [
-            "Courier",
+            "Helvetica",
             16,
             "bold"
         ]
@@ -36,5 +36,5 @@
         "SCROLLBAR_COLOR": "#37474F",
         "SCROLLBAR_HOVER": "#546E7A"
     },
-    "threading": 0
+    "threading": 1
 }
